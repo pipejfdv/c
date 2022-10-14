@@ -1,0 +1,285 @@
+#include <stdio.h>
+#include <stdbool.h>
+//------------variables-----------------//
+int user_Student,x,i, pass_Student;
+//------------funciones-----------------//
+int validacion(int user_Student, int pass_Student);
+int Vi_prom();
+int notas();
+int opciones_stu();
+int opciones_prof();
+int validacion_prof(int user_Student, int pass_Student);
+//-------------Estructuras----------------//
+struct estudiantes
+{  //Estruturas los datos del usuario
+  int id_usuario; //cedula de estudiante
+  int contrasenas;
+  char nombre[40];
+  float corte_1;
+  float corte_2;
+  float corte_3;
+};
+
+struct estudiantes lista[]=
+{
+  {1030696278, 1030696278, "Juan Felipe Delgadillo V."},
+  {1000988140, 1000988140, "Juliana"},
+  {12345, 12345, "Nicolas"},
+  {123456, 123456, "Sofia"},
+  {1234567, 1234567, "Nicol"}
+};
+struct profesores
+{
+  int id_profesor;
+  int contras;
+};
+
+struct profesores list[]=
+{
+{9874, 9874},
+{98745, 98745}
+};
+
+int main()
+{//se creara opnciones de registro
+  
+  while(1)//generar ciclo infinito//
+    {
+      int opc1;
+      printf("---------Bienvenido a tu portal-------    \n");
+      printf("---------Casita Azul-------\n");
+      printf("¿Eres estuantes? -> 1\n¿Eres profesor? -> 2\n");
+      scanf("%d", &opc1);
+      if (opc1 == 1)//identificar el usuario tipo Estudiante//
+        {
+        printf("Bienvenido Estudiante\n Ingresa tu usuario:\n");
+        scanf("%d", &user_Student);
+        printf("Ingresa tu contraseña:\n");
+        scanf("%d", &pass_Student);
+        x = validacion(user_Student, pass_Student);
+        printf("Ingresando al sistema...\n");
+          
+        switch(x)
+          {
+            case 1:
+            opciones_stu();
+            break;
+          }
+        }
+      else if (opc1 == 2)
+        {
+        printf("Bienvenido Profesor\n Ingresa su usuario:\n");
+        scanf("%d", &user_Student);
+        printf("Ingresa su contraseña:\n");
+        scanf("%d", &pass_Student);
+        x = validacion_prof(user_Student, pass_Student);
+        
+        switch(x){
+          case 1:
+            opciones_prof();
+            break;
+
+          default:
+            printf("no declarado error: 1001");
+        }
+        }
+      else {
+        printf("Te quedo mal, vuelve a intentar\n");
+        exit(1);
+      }
+    }
+  
+}
+
+
+int validacion(user_Student, pass_Student)//funcion de validacion
+{
+  for (i=0; i<4; i++)
+    {
+      if (lista[i].id_usuario == user_Student)
+      {
+        if(lista[i].contrasenas == pass_Student)
+        {
+          return 1;
+          break;
+        }
+        else{
+          printf("La contraseña ingresada no es la correcta\n");
+          return 0;
+        }}
+      else{
+        printf("El usuario indicadno no es el correcto\n");
+        main();
+      }
+    }
+}
+
+int validacion_prof(user_Student, pass_Student)//funcion de validacion
+{
+  for (i=0; i<2; i++)
+    {
+      if (list[i].id_profesor == user_Student)
+        if(list[i].contras == pass_Student)
+        {
+          return 1;
+          break;
+        }
+        else{
+          printf("La contraseña ingresada no es la correcta\n");
+          exit (1);
+        }
+      else{
+        printf("El usuario indicadno no es el correcto\n");
+        exit(1);
+      }
+    }
+}
+
+int opciones_prof()//solo manejar las opciones del profesor
+{
+  int op_prof;
+  int materia;
+  printf("Escoge la opcion que necesitas:\n1.Asignar notas\n2.Visualizar notas\n");
+  scanf("%d", &op_prof);
+  switch (op_prof)
+    {
+      case 1:
+      {
+        printf("Escoge la materia:\n1.Leguaje de programación\n2.Matematicas II (no habilitado)\n");
+        scanf("%d", &materia);
+        if (materia == 1)
+          notas();
+          break;
+      }
+      case 2:
+      {
+        Vi_prom();
+        break;
+      }
+    }
+  
+}
+
+int notas()
+{
+  int n, cod_estudiante;
+  printf("¿Para que corte deseas ingresar la nota?\n1.Primer corte\n2.Segundo corte\n3.Tercer corte\n");
+  scanf("%d", &n);
+  printf("Ingrese el codigo del estudiante: ");
+  scanf("%d", &cod_estudiante);
+  if(n==1){
+    for(i=0;i<5;i++)
+      {
+      if (lista[i].id_usuario == cod_estudiante)
+      {
+        printf("Ingresa la nota: ");
+        scanf("%f", &lista[i].corte_1);
+        printf("La nota fue ingresa en el sistema\n");
+        return i;
+      }
+      else{
+        printf("El codigo del estudiante no existe\n");
+        return notas();
+      }
+      }
+  }
+  else if (n==2){
+    for(i=0;i<5;i++)
+      {
+      if (lista[i].id_usuario == cod_estudiante)
+      {
+        printf("Ingresa la nota: ");
+        scanf("%f", &lista[i].corte_2);
+        printf("La nota fue ingresa en el sistema\n");
+        return i;
+      }
+      else{
+        printf("El codigo del estudiante no existe\n");
+        return notas();
+      }
+      }
+  }
+  else if (n==3){
+    for(i=0;i<5;i++)
+      {
+      if (lista[i].id_usuario == cod_estudiante)
+      {
+        printf("Ingresa la nota: ");
+        scanf("%f", &lista[i].corte_3);
+        printf("La nota fue ingresa en el sistema\n");
+        return i;
+      }
+      else{
+        printf("El codigo del estudiante no existe\n");
+        return notas();
+      }
+      }
+  }
+  else {
+    printf("Opncion no valida.\n");
+    return notas();
+  }
+}
+int Vi_prom()
+{
+  int m, cod_estudiante;
+  printf("Ingrese el codigo del estudiante: ");
+  scanf("%d", &cod_estudiante);
+  for(i=0; i<5; i++){
+  if (lista[i].id_usuario == cod_estudiante){
+    printf("Estudiante %s \nNotas:\nCorte 1: %f\nCorte 2: %f\nCorte 3: %f", lista[i].nombre, lista[i].corte_1, lista[i].corte_2, lista[i].corte_3);
+    float prom = (lista[i].corte_1 + lista[i].corte_2 + lista[i].corte_3) / 3;
+    printf("\n %f Promedio", prom); 
+    printf("\nDeseas regresar al menu principal: \n1.Si\n2.Cambiar notas\n3.No (Se cierra el progarama)\n");
+    scanf("%d", &m);
+    if (m==1){
+      return opciones_prof();
+    }
+    else if (m==2){
+      return notas();
+    }
+    else{
+      exit(1);
+    }
+    }
+  else 
+  {
+    printf("El codigo del estudiante no existe\n");
+    return Vi_prom();
+  }
+  }
+}
+
+int opciones_stu()
+{
+  int stu;
+  printf("Selecciona la opcion: \n1.Consultar notas\n2.Materias incritas\n3.Salir\n");
+  scanf("%d", &stu);
+  //printf("C")
+  if (stu == 1){
+    printf("Estudiante %s \nNotas:\nCorte 1: %f\nCorte 2: %f\nCorte 3: %f", lista[i].nombre, lista[i].corte_1, lista[i].corte_2, lista[i].corte_3);
+    float prom = (lista[i].corte_1 + lista[i].corte_2 + lista[i].corte_3) / 3;
+    printf("\nPromedio %f\nMayor nota", prom);
+    if (lista[i].corte_1 > lista[i].corte_2 && lista[i].corte_1 > lista[i].corte_3)
+    {
+     printf("Nota mayor corte 1"); 
+    }
+    else if (lista[i].corte_2 > lista[i].corte_1 && lista[i].corte_2 > lista[i].corte_3)
+    {
+      printf("Nota mayor corte 2"); 
+    }
+    else if(lista[i].corte_3 > lista[i].corte_1 && lista[i].corte_3 > lista[i].corte_2)
+    {
+     printf("Nota mayor corte 3"); 
+    }
+  }
+  else if (stu == 3)
+  {
+    return 0;
+  }
+  else
+  {
+    printf("Opcion no habilitada en el momento");
+    return opciones_stu();
+  }
+}
